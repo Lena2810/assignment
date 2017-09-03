@@ -15,23 +15,37 @@ class DecisionA(Page):
 
 class DecisionB(Page):
     def is_displayed(self):
-        return self.player.id_in_group == 2
+        return self.group.investment_A == "I want to delegate the investment decision to player B." and self.player.id_in_group == 2
     form_model=models.Group
     form_fields=["investment_B"]
 
 class Information(Page):
-    form_model=models.Group
+    pass
+
+class Punishment(Page):
+    def is_displayed(self):
+        return self.player.id_in_group == 3 or self.player.id_in_group == 4
+    form_model=models.Player
     form_fields=["punishment"]
 
+class PunishmentDecision(Page):
+    def is_displayed(self):
+        return self.player.id_in_group == 3 or self.player.id_in_group == 4 and self.player.punishment == True
+
+    form_model=models.Player
+    form_fields=["punishment_A", "punishment_B","punishment_C", "punishment_D"]
+
 class ResultsWaitPage(WaitPage):
-	pass
-    #def after_all_players_arrive(self):
-        #pass
+    def after_all_players_arrive(self):
+        self.group.set_payoffs()
 
 
 class Results(Page):
+    pass
+
+class Questions(Page):
     form_model=models.Player
-    form_fields=["age","gender","field_of_studies","willingness_risk","nationality"]
+    form_fields=["age","gender","field_of_studies","no_student","willingness_risk","nationality"]
 
 
 page_sequence = [
@@ -39,5 +53,9 @@ page_sequence = [
     DecisionA,
     DecisionB,
     Information,
-    Results
+    Punishment,
+    PunishmentDecision,
+    ResultsWaitPage,
+    Results,
+    Questions
 ]

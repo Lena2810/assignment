@@ -1,0 +1,16 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Punishment decision
+{% endblock %}
+
+
+{% block content %}
+{%formfield player.punishment_A%}
+{%formfield player.punishment_B%}
+{%formfield player.punishment_C%}
+{%formfield player.punishment_D%}
+
+    {% next_button %}
+{% endblock %}

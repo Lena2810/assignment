@@ -52,17 +52,21 @@ class Group(BaseGroup):
         verbose_name="Which investment do you want to choose?",
         doc="Decision player B investment, Charfield input"
         )
+
+    #payoffs
+
     def set_payoffs(self):
         p1 = self.get_player_by_role("A")
         p2 = self.get_player_by_role("B")
         p3 = self.get_player_by_role("C")
         p4 = self.get_player_by_role("D")
-
-    punishment=models.CharField(
-        choices=["Yes", "No"],
-        widget=widgets.RadioSelect(),
-        verbose_name="Do you want to pay 10 of your points to get 70 punishment points?",
-        doc="Decision player C and D whether to buy punishment points.")
+    #if self.investment_A== "Investment 1":
+       # if self.punishment:
+       # p1.payoff=Constants.endowment - self.offer
+       # p2.payoff=self.offer
+    #else:
+       # p1.payoff=0
+        #p2.payoff=0
 
 class Player(BasePlayer):
 
@@ -76,6 +80,37 @@ class Player(BasePlayer):
         else:
             return "D"
 
+#punishment
+    punishment=models.BooleanField(
+        choices=[(True, "Yes"), (False, "No")],
+        widget=widgets.RadioSelect(),
+        verbose_name="Do you want to pay 10 of your points to get 70 punishment points?",
+        doc="Boolean Field for decision C and D whether to buy punishment points."
+        )
+
+    punishment_A=models.PositiveIntegerField(
+        choices = range(0, 70),
+        widget=widgets.SliderInput(),
+        verbose_name="How much do you want to punish A?",
+        doc= "Punishment A")
+    punishment_B=models.PositiveIntegerField(
+        min= 0,
+        max= 70,
+        widget=widgets.SliderInput(),
+        verbose_name="How much do you want to punish B?",
+        doc= "Punishment B")
+    punishment_C=models.PositiveIntegerField(
+        min=0,
+        max= 70,
+        widget=widgets.SliderInput(),
+        verbose_name="How much do you want to punish C?",
+        doc= "Punishment C")
+    punishment_D=models.PositiveIntegerField(
+        choices = range(0, 70),
+        widget=widgets.SliderInput(),
+        verbose_name="How much do you want to punish D?",
+        doc= "Punishment D")
+
     #demographics
     age = models.PositiveIntegerField(
         max=120,
@@ -84,16 +119,21 @@ class Player(BasePlayer):
         doc="collect age data between 0 and 120"
         )
     gender = models.CharField(
-        choices=["Female", "Male", "others"],
+        choices=["Female", "Male"],
         widget=widgets.RadioSelect(),
         blank=True,
         verbose_name="What is your gender?",
         doc="Ask for the gender"
         )
     field_of_studies = models.CharField(
+        blank=True,
         verbose_name="What do you study if at all?",
         doc="free text input of field of studies"       
         )
+    no_student = models.BooleanField(
+        verbose_name="I'm not a student",
+        widget=widgets.CheckboxInput(),
+        doc="Boolean Field, if player is no student: 1")
     willingness_risk= models.CharField(
         choices=["Strongly disagree", "Disagree", "Moderately Disagree", "Undecided", "Moderately Agree", "Agree", "Strongly Agree"],
         blank=True,

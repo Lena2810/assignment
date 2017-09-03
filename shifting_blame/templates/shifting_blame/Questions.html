@@ -1,0 +1,18 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Demographics
+{% endblock %}
+
+{% block content %}
+Please fill out: <br/>
+
+{%formfield player.age%}
+{%formfield player.gender%}
+{%formfield player.field_of_studies%} {%formfield player.no_student%}
+{%formfield player.willingness_risk%}
+{%formfield player.nationality%}
+
+    {% next_button %}
+{% endblock %}

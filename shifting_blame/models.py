@@ -17,8 +17,10 @@ class Constants(BaseConstants):
     players_per_group = 4
     num_rounds = 1
     endowment = c(100)
-    treatment_risk = 0.3
+    project_1_points= c(50)
+    treatment_risk = 0.7
     treatment_baseline = 0
+    punishment_max=c(70)
 
 
 class Subsession(BaseSubsession):
@@ -33,33 +35,83 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-
+    #randomize treatment
     risk=models.CharField(
-        #choices=["baseline","risk"],
-        #doc="treatment of investment"
+        choices=["baseline","risk"],
+        doc="treatment of investment"
         )
-        # randomize to treatments
+    successful = models.BooleanField(choices=[(True, "1"), (False, "0")], verbose_name="")
+
+#risk treatment successful:
+    risk_treatment=['successful','successful', 'successful', 0, 0, 0, 0, 0, 0, 0]
 
     investment_A=models.CharField(
-        choices=["Investment 1", "Investment 2", "I want to delegate the investment decision to player B."],
+        choices=["Project 1", "Project 2", "I want to delegate the investment decision to player B."],
         widget=widgets.RadioSelect(),
         verbose_name="Which investment do you want to choose?",
         doc="Decision player A investment, Charfield input"
         )
     investment_B=models.CharField(
-        choices=["Investment 1", "Investment 2"],
+        choices=["Project 1", "Project 2"],
         widget=widgets.RadioSelect(),
         verbose_name="Which investment do you want to choose?",
         doc="Decision player B investment, Charfield input"
         )
 
-    #payoffs
-
+#payoffs
     def set_payoffs(self):
         p1 = self.get_player_by_role("A")
         p2 = self.get_player_by_role("B")
         p3 = self.get_player_by_role("C")
         p4 = self.get_player_by_role("D")
+# investment outcome
+    def determine_payoffs_investment(self):
+        if self.investment_A == "Project 1" or self.investment_B == "Project 1":
+            if self.risk == "baseline":
+                p1.payoff= Constants.endowment+Constants.project_1_points
+                p2.payoff= Constants.endowment+Constants.project_1_points
+                p3.payoff= Constants.endowment+Constants.project_1_points
+                p4.payoff= Constants.endowment+Constants.project_1_points
+            if self.risk == "risk":
+                if random.choice(risk_treatment) == 'successful':
+                    p1.payoff= Constants.endowment+Constants.project_1_points
+                    p2.payoff= Constants.endowment+Constants.project_1_points
+                    p3.payoff= Constants.endowment+Constants.project_1_points
+                    p4.payoff= Constants.endowment+Constants.project_1_points
+                else:
+                    p1.payoff= Constants.endowment-c(50)
+                    p2.payoff= Constants.endowment-c(50)
+                    p3.payoff= Constants.endowment-c(50)
+                    p4.payoff= Constants.endowment-c(50)
+        if self.investment_A =="Project 2" or self.investment_B == "Project 2":
+            if self.risk == "baseline":
+                p1.payoff= Constants.endowment+c(90)
+                p2.payoff= Constants.endowment+c(90)
+                p3.payoff= Constants.endowment+c(10)
+                p4.payoff= Constants.endowment+c(10)
+            if self.risk == "risk":
+                if random.choice(risk_treatment) == 'successful':
+                    p1.payoff= Constants.endowment+c(90)
+                    p2.payoff= Constants.endowment+c(90)
+                    p3.payoff= Constants.endowment+c(10)
+                    p4.payoff= Constants.endowment+c(10)
+                else:
+                    p1.payoff= Constants.endowment-c(50)
+                    p2.payoff= Constants.endowment-c(50)
+                    p3.payoff= Constants.endowment-c(50)
+                    p4.payoff= Constants.endowment-c(50)
+
+
+
+
+
+
+
+
+        
+    #payoffs
+
+
     #if self.investment_A== "Investment 1":
        # if self.punishment:
        # p1.payoff=Constants.endowment - self.offer
@@ -89,27 +141,31 @@ class Player(BasePlayer):
         )
 
     punishment_A=models.PositiveIntegerField(
-        choices = range(0, 70),
-        widget=widgets.SliderInput(),
+        min= 0,
+        max= Constants.punishment_max,
         verbose_name="How much do you want to punish A?",
         doc= "Punishment A")
     punishment_B=models.PositiveIntegerField(
         min= 0,
-        max= 70,
-        widget=widgets.SliderInput(),
+        max= Constants.punishment_max,
         verbose_name="How much do you want to punish B?",
         doc= "Punishment B")
     punishment_C=models.PositiveIntegerField(
         min=0,
-        max= 70,
-        widget=widgets.SliderInput(),
+        max= Constants.punishment_max,
         verbose_name="How much do you want to punish C?",
         doc= "Punishment C")
     punishment_D=models.PositiveIntegerField(
-        choices = range(0, 70),
-        widget=widgets.SliderInput(),
+        min=0,
+        max=Constants.punishment_max,
         verbose_name="How much do you want to punish D?",
         doc= "Punishment D")
+
+    punishment_all=models.PositiveIntegerField()
+
+    def determine_punishment_all(self):
+        punishment_all=self.punishment_A+self.punishment_B+self.punishment_C+self.punishment_D
+        max=Constants.punishment_max
 
     #demographics
     age = models.PositiveIntegerField(

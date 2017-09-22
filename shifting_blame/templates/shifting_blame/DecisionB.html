@@ -2,10 +2,48 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Instructions
+    Investment decision
 {% endblock %}
 
 {% block content %}
+<p>&nbsp;</p>
+Player A delegated the decision to you.
+<p>&nbsp;</p>
+<p>Inital endowment of each player: 100 points</p>
+<table style="height: 220px; width: 243.033px;">
+<tbody>
+<tr>
+<td style="width: 53px; text-align: center;">&nbsp;</td>
+<td style="width: 75px; text-align: center;"><strong>Project 1</strong></td>
+<td style="width: 91.0333px; text-align: center;"><strong>Project 2</strong></td>
+</tr>
+<tr>
+<td style="width: 53px; text-align: center;"><strong>A</strong></td>
+<td style="width: 75px; text-align: center;">+ 50</td>
+<td style="width: 91.0333px; text-align: center;">+90</td>
+</tr>
+<tr>
+<td style="width: 53px; text-align: center;"><strong>B</strong></td>
+<td style="width: 75px; text-align: center;">+50</td>
+<td style="width: 91.0333px; text-align: center;">+90</td>
+</tr>
+<tr>
+<td style="width: 53px; text-align: center;"><strong>C</strong></td>
+<td style="width: 75px; text-align: center;">+50</td>
+<td style="width: 91.0333px; text-align: center;">+10</td>
+</tr>
+<tr>
+<td style="width: 53px; text-align: center;"><strong>D</strong></td>
+<td style="width: 75px; text-align: center;">+50</td>
+<td style="width: 91.0333px; text-align: center;">+10</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Risk:</strong></p>
+<p>-baseline: 0% probability that the investment is not successful</p>
+<p>-risk: 30% probabilty that the investment is not successful</p>
+<p>If the project is not successful, each player loses 50 points. If it is successful, the players receive the points stated in the table above.</p>
+<p>&nbsp;</p>
 
 {%formfield group.investment_B%}
 

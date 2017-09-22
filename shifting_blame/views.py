@@ -7,6 +7,9 @@ from .models import Constants
 class Instructions(Page):
     pass
 
+class Role(Page):
+    pass
+
 class DecisionA(Page):
     def is_displayed(self):
         return self.player.id_in_group == 1
@@ -20,7 +23,9 @@ class DecisionB(Page):
     form_fields=["investment_B"]
 
 class Information(Page):
-    pass
+   pass
+   # def after_all_players_arrive(self):
+     #   return self.Group.
 
 class Punishment(Page):
     def is_displayed(self):
@@ -34,6 +39,7 @@ class PunishmentDecision(Page):
 
     form_model=models.Player
     form_fields=["punishment_A", "punishment_B","punishment_C", "punishment_D"]
+
 
 class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
@@ -50,6 +56,7 @@ class Questions(Page):
 
 page_sequence = [
     Instructions,
+    Role,
     DecisionA,
     DecisionB,
     Information,

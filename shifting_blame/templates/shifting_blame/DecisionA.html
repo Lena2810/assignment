@@ -2,11 +2,13 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Decision investment
+    Investment Decision
 {% endblock %}
 
 {% block content %}
-
+<p>&nbsp;</p>
+Now, you have to decide between the two following investment choices.
+<p>&nbsp;</p>
 <p>Inital endowment of each player: 100 points</p>
 <table style="height: 220px; width: 243.033px;">
 <tbody>
@@ -37,17 +39,15 @@
 </tr>
 </tbody>
 </table>
-<p>Risk:</p>
-<p>However, there exists a risk: no matter which project is chosen, there is a chance that it is not successful:</p>
-<p>with equal chance 2 treatments are possible:</p>
-<p>- baseline : probability that the project is not successful: 0%</p>
-<p>- risk: probability that the project is not successful: 30%</p>
+<p><strong>Risk:</strong></p>
+<p>-baseline: 0% probability that the investment is not successful</p>
+<p>-risk: 30% probabilty that the investment is not successful</p>
 <p>If the project is not successful, each player loses 50 points. If it is successful, the players receive the points stated in the table above.</p>
 <p>&nbsp;</p>
 
 
-
 {%formfield group.investment_A%}
+<p>&nbsp;</p>
 <!--
 Documentation on how to write a django template here:
 https://docs.djangoproject.com/en/1.8/ref/templates/language/

@@ -26,6 +26,8 @@ class DecisionB(Page):
     form_fields=["investment_B"]
 
 class WaitPage2(WaitPage):
+    def is_displayed(self):
+        return self.group.investment_A == "I want to delegate the investment decision to player B."
     title_text = "wait for Player B to make his decision."
     #def before_next_page(self):
         #self.group.determine_payoffs_investment()

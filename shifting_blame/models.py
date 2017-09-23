@@ -43,7 +43,7 @@ class Group(BaseGroup):
     successful = models.BooleanField(choices=[(True, "1"), (False, "0")], verbose_name="")
 
 #risk treatment successful:
-    risk_treatment=['successful','successful', 'successful', 0, 0, 0, 0, 0, 0, 0]
+    risk_treatment=['successful','successful', 'successful', 'unsuccessful', 'unsuccessful', 'unsuccessful', 'unsuccessful', 'unsuccessful', 'unsuccessful', 'unsuccessful']
 
     investment_A=models.CharField(
         choices=["Project 1", "Project 2", "I want to delegate the investment decision to player B."],
@@ -58,6 +58,17 @@ class Group(BaseGroup):
         doc="Decision player B investment, Charfield input"
         )
 
+
+
+    project_success = models.CharField(random.choice(risk_treatment))
+
+    project_success_verbose = models.CharField()
+
+    def calculate_project_success(self):
+        if self.random.choice(risk_treatment) == "successful":
+           self.project_success_verbose = "successful"
+        else:
+           self.project_success_verbose = "unsuccessful"
 #payoffs
 # investment outcome
     def determine_payoffs_investment(self):
@@ -72,7 +83,7 @@ class Group(BaseGroup):
                 p3.payoff= Constants.endowment+Constants.project_1_points
                 p4.payoff= Constants.endowment+Constants.project_1_points
             if self.risk == "risk":
-                if random.choice(risk_treatment) == 'successful':
+                if project_success == 'successful':
                     p1.payoff= Constants.endowment+Constants.project_1_points
                     p2.payoff= Constants.endowment+Constants.project_1_points
                     p3.payoff= Constants.endowment+Constants.project_1_points
@@ -89,7 +100,7 @@ class Group(BaseGroup):
                 p3.payoff= Constants.endowment+c(10)
                 p4.payoff= Constants.endowment+c(10)
             if self.risk == "risk":
-                if random.choice(risk_treatment) == 'successful':
+                if project_success == 'successful':
                     p1.payoff= Constants.endowment+c(90)
                     p2.payoff= Constants.endowment+c(90)
                     p3.payoff= Constants.endowment+c(10)

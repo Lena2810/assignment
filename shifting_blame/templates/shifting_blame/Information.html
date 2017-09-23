@@ -9,19 +9,28 @@
 
 Player A chose {{group.investment_A}}.
 <p>&nbsp;</p>
-Player B chose {{group.investment_B}}.
+{% if group.investment_A == "I want to delegate the investment decision to player B." %}
+        Player B chose {{group.investment_B}}.
+{% else %}
+        Player B did not decided anything.
+{% endif %}
 <p>&nbsp;</p>
 The treatment of the project was {{group.risk}}.
 <p>&nbsp;</p>
+{% if group.risk == "risk" %}
+    The project was {{group.project_success_verbose}}.
+{% else %}
+{% endif %}
+<p>&nbsp;</p>
 Therefore the payoff for the players are:
 <p>&nbsp;</p>
-Player A: {{group.p1.payoff}}
+Player A: {{player.payoff}}
 <p>&nbsp;</p>
-Player B: {{group.p2.payoff}}
+Player B: {{player.payoff}}
 <p>&nbsp;</p>
-Player C: {{group.p3.payoff}}
+Player C: {{player.payoff}}
 <p>&nbsp;</p>
-Player D: {{group.p4.payoff}}
+Player D: {{player.payoff}}
 <p>&nbsp;</p>
 <!--
 Documentation on how to write a django template here:
@@ -33,5 +42,4 @@ http://getbootstrap.com/components/
 -->
 
     {% next_button %}
-
 {% endblock %}

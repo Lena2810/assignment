@@ -59,13 +59,12 @@ class Group(BaseGroup):
         )
 
 #payoffs
-    def set_payoffs(self):
+# investment outcome
+    def determine_payoffs_investment(self):
         p1 = self.get_player_by_role("A")
         p2 = self.get_player_by_role("B")
         p3 = self.get_player_by_role("C")
         p4 = self.get_player_by_role("D")
-# investment outcome
-    def determine_payoffs_investment(self):
         if self.investment_A == "Project 1" or self.investment_B == "Project 1":
             if self.risk == "baseline":
                 p1.payoff= Constants.endowment+Constants.project_1_points

@@ -7,7 +7,22 @@
 
 {% block content %}
 
-
+Player A chose {{group.investment_A}}.
+<p>&nbsp;</p>
+Player B chose {{group.investment_B}}.
+<p>&nbsp;</p>
+The treatment of the project was {{group.risk}}.
+<p>&nbsp;</p>
+Therefore the payoff for the players are:
+<p>&nbsp;</p>
+Player A: {{group.p1.payoff}}
+<p>&nbsp;</p>
+Player B: {{group.p2.payoff}}
+<p>&nbsp;</p>
+Player C: {{group.p3.payoff}}
+<p>&nbsp;</p>
+Player D: {{group.p4.payoff}}
+<p>&nbsp;</p>
 <!--
 Documentation on how to write a django template here:
 https://docs.djangoproject.com/en/1.8/ref/templates/language/

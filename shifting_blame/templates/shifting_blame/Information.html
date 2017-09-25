@@ -2,7 +2,7 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Choosed project
+    Choosen project
 {% endblock %}
 
 {% block content %}
@@ -21,17 +21,11 @@ The treatment of the project was {{group.risk}}.
     The project was {{group.project_success_verbose}}.
 {% else %}
 {% endif %}
+
 <p>&nbsp;</p>
-Therefore the payoff for the players are:
+Your outcome is {{player.payoff}}.
 <p>&nbsp;</p>
-Player A: {{player.payoff}}
-<p>&nbsp;</p>
-Player B: {{player.payoff}}
-<p>&nbsp;</p>
-Player C: {{player.payoff}}
-<p>&nbsp;</p>
-Player D: {{player.payoff}}
-<p>&nbsp;</p>
+
 <!--
 Documentation on how to write a django template here:
 https://docs.djangoproject.com/en/1.8/ref/templates/language/

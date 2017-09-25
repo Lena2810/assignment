@@ -60,7 +60,6 @@ class Group(BaseGroup):
     project_success = models.CharField()
 
     def calculate_project_success(self):
-        print(self.risk_treatment)
         self.project_success = random.choice(self.risk_treatment)
 
         

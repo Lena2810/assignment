@@ -57,14 +57,12 @@ class Group(BaseGroup):
 #risk treatment successful:
     risk_treatment=['unsuccessful','unsuccessful', 'unsuccessful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful']
    
-
     project_success = models.CharField()
 
     def calculate_project_success(self):
         self.project_success = random.choice(risk_treatment)
 
     project_success_verbose = models.CharField()
-
 
     def calculate_project_success_verbose(self):
         self.project_success_verbose = 'successful' if self.project_success == 'successful' else 'unsuccessful'
@@ -122,13 +120,10 @@ class Group(BaseGroup):
         
 
 
-        #if self.punishment_selection == "C":
-
-
-
-
  #final payoffs after punishment decision
-    #def determine_final_payoff(self):
+  def determine_final_payoff(self):
+        if self.punishment_selection == "C":
+            self.p1.final.payoff= p1.payoff - punishment_A
 
 
 

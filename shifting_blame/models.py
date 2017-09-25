@@ -60,12 +60,9 @@ class Group(BaseGroup):
     project_success = models.CharField()
 
     def calculate_project_success(self):
-        self.project_success = random.choice(risk_treatment)
+        print(self.risk_treatment)
+        self.project_success = random.choice(self.risk_treatment)
 
-    project_success_verbose = models.CharField()
-
-    def calculate_project_success_verbose(self):
-        self.project_success_verbose = 'successful' if self.project_success == 'successful' else 'unsuccessful'
         
 #payoffs
 # payoffs after investment decision
@@ -115,15 +112,29 @@ class Group(BaseGroup):
     punishment_selection = models.CharField()
 
     def determine_punishment_selection(self):
-        self.punishment_selection = random.choice("C", "D")
+        self.punishment_selection = random.choice(["C", "D"])
         #random = choice(["C",D])
         
 
 
  #final payoffs after punishment decision
-  def determine_final_payoff(self):
+    def determine_final_payoffs(self):
+        
+        punisher = self.get_player_by_role(self.punishment_selection)
+
+        p1 = self.get_player_by_role("A")
+        p2 = self.get_player_by_role("B")
+        p3 = self.get_player_by_role("C")
+        p4 = self.get_player_by_role("D")
+
+        p1.payoff = p1.payoff - punisher.punishment_A
+        p2.payoff = p2.payoff - punisher.punishment_B
+
         if self.punishment_selection == "C":
-            self.p1.final.payoff= p1.payoff - punishment_A
+            p4.payoff = p4.payoff - punisher.punishment_D
+
+        if self.punishment_selection == "D":
+            p3.payoff = p3.payoff - punisher.punishment_C
 
 
 
@@ -160,25 +171,29 @@ class Player(BasePlayer):
         max= Constants.punishment_max,#
         blank=True,
         verbose_name="How much do you want to punish A?",
-        doc= "Punishment A")
+        doc= "Punishment A",
+        initial=0)
     punishment_B=models.PositiveIntegerField(
         min= 0,
         max= Constants.punishment_max,
         blank=True,
         verbose_name="How much do you want to punish B?",
-        doc= "Punishment B")
+        doc= "Punishment B",
+        initial=0)
     punishment_C=models.PositiveIntegerField(
         min=0,
         max= Constants.punishment_max,
         blank=True,
         verbose_name="How much do you want to punish C?",
-        doc= "Punishment C")
+        doc= "Punishment C",
+        initial=0)
     punishment_D=models.PositiveIntegerField(
         min=0,
         max=Constants.punishment_max,
         blank=True,
         verbose_name="How much do you want to punish D?",
-        doc= "Punishment D")
+        doc= "Punishment D",
+        initial=0)
 
     punishment_all=models.PositiveIntegerField(
         initial=0,

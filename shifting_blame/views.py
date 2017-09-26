@@ -31,10 +31,13 @@ class DecisionB(Page):
 class WaitPage2(WaitPage):    
     title_text = "wait for Player B to make his decision."
 
+    def is_displayed(self):
+        return self.group.investment_A == "I want to delegate the investment decision to player B."
+
 
 
     #def before_next_page(self):
-        #self.group.determine_payoffs_investment()
+       # self.group.determine_payoffs_investment()
 
 #class WaitPage2(WaitPage):
     #def after_all_players_arrive(self):
@@ -55,13 +58,13 @@ class Information(Page):
 class Punishment(Page):
     def is_displayed(self):
         return self.player.id_in_group == 3 or self.player.id_in_group == 4
-    form_model=models.Player
+    form_model=models.Group
     form_fields=["punishment"]
 
 
 class PunishmentDecision(Page):
     def is_displayed(self):
-        return self.player.punishment == True #vllt reicht auch nur player.punishment = TRUE?
+        return self.group.punishment == True
 
     form_model=models.Player
 

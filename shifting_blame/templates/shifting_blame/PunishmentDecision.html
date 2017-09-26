@@ -8,20 +8,18 @@
 
 {% block content %}
 
-{% if player.id_in_group == 3 %}
-
     {%formfield player.punishment_A%}
     {%formfield player.punishment_B%}
+
+{% if player.id_in_group == 3 %} 
+
     {%formfield player.punishment_D%}
 
-{% else %}
-   
-    {%formfield player.punishment_A%}
-    {%formfield player.punishment_B%}
-    {%formfield player.punishment_C%}
-    
-{% endif %}
 
+{% else %} 
+    {%formfield player.punishment_C%}
+
+{% endif %}
 
     {% next_button %}
 {% endblock %}

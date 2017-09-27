@@ -107,7 +107,7 @@ class Questions(Page):
 
 
 page_sequence = [
-    #WaitPage0,
+    WaitPage0,
     Instructions,
     Role,
     DecisionA,

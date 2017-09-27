@@ -81,7 +81,6 @@ class Group(BaseGroup):
                     p3.payoff= Constants.endowment+Constants.project_1_points
                     p4.payoff= Constants.endowment+Constants.project_1_points
                 else:
-                    #p1.payoff= c(1000)
                     p1.payoff= Constants.endowment-c(50)
                     p2.payoff= Constants.endowment-c(50)
                     p3.payoff= Constants.endowment-c(50)

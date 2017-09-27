@@ -43,13 +43,13 @@ class Group(BaseGroup):
         choices=["Project 1", "Project 2", "I want to delegate the investment decision to player B."],
         widget=widgets.RadioSelect(),
         verbose_name="Which investment do you want to choose?",
-        doc="Decision player A investment, Charfield input"
+        doc="Decision of player A, Charfield input"
         )
     investment_B=models.CharField(
         choices=["Project 1", "Project 2"],
         widget=widgets.RadioSelect(),
         verbose_name="Which investment do you want to choose?",
-        doc="Decision player B investment, Charfield input"
+        doc="Decision of player B, Charfield input"
         )
 
 #risk treatment successful:
@@ -109,7 +109,7 @@ class Group(BaseGroup):
     punishment=models.BooleanField(
         choices=[(True, "Yes"), (False, "No")],
         widget=widgets.RadioSelect(),
-        verbose_name="Do you want to pay 10 of your points to get 70 punishment points?",
+        verbose_name="Do you want to pay 10 points to get 70 punishment points?",
         doc="Boolean Field for decision C and D whether to buy punishment points."
         ) 
 
@@ -207,9 +207,6 @@ class Player(BasePlayer):
         doc= "Punishment D",
         initial=0)
 
-    punishment_all=models.PositiveIntegerField(
-        initial=0,
-        max= Constants.punishment_max)
 
     #demographics
     age = models.PositiveIntegerField(
@@ -242,8 +239,8 @@ class Player(BasePlayer):
         doc="willigness to take risk input CharField"
         )
     nationality=models.CharField(
-        choices=["German", "Italian","French","Spanish","American","Swedish","Great Britain", "Chinese", "Japan","other"],
+        choices=["Germany", "Italy","France","Spain","Belgium","The Netherlands","UK", "China", "Japan","USA", "other"],
         blank=True,
-        verbose_name="What is your nationality?",
+        verbose_name="What is your country of birth?",
         doc= "input nationality dropdown"
         )

@@ -11,7 +11,8 @@ class WaitPage0(WaitPage):
 
 
 class Instructions(Page):
-    pass
+    def before_next_page(self):
+        self.group.set_treatment()
 
 class Role(Page):
     pass
@@ -107,7 +108,7 @@ class Questions(Page):
 
 
 page_sequence = [
-    #WaitPage0,
+    WaitPage0,
     Instructions,
     Role,
     DecisionA,

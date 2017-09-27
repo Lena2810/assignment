@@ -22,13 +22,14 @@ class Constants(BaseConstants):
     punishment_costs = c(10)
 
 class Subsession(BaseSubsession):
-    def creating_session(self):
-        self.group_randomly()
-        for group in self.get_groups():
-            if 'treatment' in self.session.config:
-                group.risk = self.session.config['treatment']       #demo
-            else:
-                group.risk = random.choice(['baseline', 'risk'])    #live experiment
+    # def creating_session(self):
+    #     self.group_randomly()
+    #     for group in self.get_groups():
+    #         if 'treatment' in self.session.config:
+    #             group.risk = self.session.config['treatment']       #demo
+    #         else:
+    #             group.risk = random.choice(['baseline', 'risk'])    #live experiment
+    pass
 
 
 
@@ -56,6 +57,12 @@ class Group(BaseGroup):
     risk_treatment=['unsuccessful','unsuccessful', 'unsuccessful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful']
    
     project_success = models.CharField()
+
+    def set_treatment(self):
+        if 'treatment' in self.session.config:
+            self.risk = self.session.config['treatment']       #demo
+        else:
+            self.risk = random.choice(['baseline', 'risk'])    #live experiment
 
     def calculate_project_success(self):
         self.project_success = random.choice(self.risk_treatment)

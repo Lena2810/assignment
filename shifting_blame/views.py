@@ -4,10 +4,10 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
-#class WaitPage0(WaitPage):
-    #group_by_arrival_time = True
+class WaitPage0(WaitPage):
+    group_by_arrival_time = True
 
-    #title_text = "Please wait to be grouped."
+    title_text = "Please wait to be grouped."
 
 
 class Instructions(Page):
@@ -91,9 +91,6 @@ class PunishmentDecision(Page):
             if int(values["punishment_A"]) + int(values["punishment_B"]) + int(values["punishment_C"]) > 70:
                 return 'The sum must be below or equal 70.'
 
-
-class PunishmentSelection(Page):
-    pass
     
 class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
@@ -121,7 +118,6 @@ page_sequence = [
     Information,
     Punishment,
     PunishmentDecision,
-    # PunishmentSelection,
     ResultsWaitPage,
     Results,
     Questions

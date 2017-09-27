@@ -52,8 +52,8 @@ class WaitPage2(WaitPage):
 
 class DeterminePayoffs(WaitPage):
     def after_all_players_arrive(self):
-        self.group.determine_payoffs_investment()
         self.group.calculate_project_success()
+        self.group.determine_payoffs_investment()
 
 
 class Information(Page):

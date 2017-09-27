@@ -53,7 +53,7 @@ class Group(BaseGroup):
         )
 
 #risk treatment successful:
-    risk_treatment=['successful','successful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful']
+    risk_treatment=['unsuccessful','unsuccessful', 'unsuccessful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful']
    
     project_success = models.CharField()
 
@@ -81,11 +81,11 @@ class Group(BaseGroup):
                     p3.payoff= Constants.endowment+Constants.project_1_points
                     p4.payoff= Constants.endowment+Constants.project_1_points
                 else:
-                    p1.payoff= c(1000)
-                   # p1.payoff= Constants.endowment-c(50)
-                   # p2.payoff= Constants.endowment-c(50)
-                    #p3.payoff= Constants.endowment-c(50)
-                   # p4.payoff= Constants.endowment-c(50)
+                    #p1.payoff= c(1000)
+                    p1.payoff= Constants.endowment-c(50)
+                    p2.payoff= Constants.endowment-c(50)
+                    p3.payoff= Constants.endowment-c(50)
+                    p4.payoff= Constants.endowment-c(50)
         if self.investment_A =="Project 2" or self.investment_B == "Project 2":
             if self.risk == "baseline":
                 p1.payoff= Constants.endowment+c(90)
@@ -142,7 +142,7 @@ class Group(BaseGroup):
                 p3.payoff = p3.payoff - Constants.punishment_costs
                 p4.payoff = p4.payoff - Constants.punishment_costs - punisher.punishment_D
             else:
-                p3.payoff = p3.payoff
+                # p3.payoff = p3.payoff
                 p4.payoff = p4.payoff - punisher.punishment_D
 
         if self.punishment_selection == "D":
@@ -152,7 +152,7 @@ class Group(BaseGroup):
                 p4.payoff = p4.payoff - Constants.punishment_costs
             else:
                 p3.payoff = p3.payoff - punisher.punishment_C
-                p4.payoff = p4.payoff              
+                # p4.payoff = p4.payoff              
 
 
 

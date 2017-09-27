@@ -7,10 +7,10 @@
 
 {% block content %}
 
-Player A chose {{group.investment_A}}.
+Player A chose: {{group.investment_A}}.
 <p>&nbsp;</p>
 {% if group.investment_A == "I want to delegate the investment decision to player B." %}
-        Player B chose {{group.investment_B}}.
+        Player B chose: {{group.investment_B}}.
 {% else %}
         Player B did not decided anything.
 {% endif %}

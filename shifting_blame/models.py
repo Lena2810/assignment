@@ -19,7 +19,7 @@ class Constants(BaseConstants):
     endowment = c(100)
     project_1_points= c(50)
     punishment_max=c(70)
-
+    punishment_costs = c(10)
 
 class Subsession(BaseSubsession):
     def creating_session(self):
@@ -38,8 +38,6 @@ class Group(BaseGroup):
         choices=["baseline","risk"],
         doc="treatment of investment"
         )
-    #successful = models.BooleanField(choices=[(True, "1"), (False, "0")], verbose_name="")
-
 
     investment_A=models.CharField(
         choices=["Project 1", "Project 2", "I want to delegate the investment decision to player B."],
@@ -55,7 +53,7 @@ class Group(BaseGroup):
         )
 
 #risk treatment successful:
-    risk_treatment=['unsuccessful','unsuccessful', 'unsuccessful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful']
+    risk_treatment=['successful','successful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful', 'successful']
    
     project_success = models.CharField()
 
@@ -83,10 +81,11 @@ class Group(BaseGroup):
                     p3.payoff= Constants.endowment+Constants.project_1_points
                     p4.payoff= Constants.endowment+Constants.project_1_points
                 else:
-                    p1.payoff= Constants.endowment-c(50)
-                    p2.payoff= Constants.endowment-c(50)
-                    p3.payoff= Constants.endowment-c(50)
-                    p4.payoff= Constants.endowment-c(50)
+                    p1.payoff= c(1000)
+                   # p1.payoff= Constants.endowment-c(50)
+                   # p2.payoff= Constants.endowment-c(50)
+                    #p3.payoff= Constants.endowment-c(50)
+                   # p4.payoff= Constants.endowment-c(50)
         if self.investment_A =="Project 2" or self.investment_B == "Project 2":
             if self.risk == "baseline":
                 p1.payoff= Constants.endowment+c(90)
@@ -106,6 +105,14 @@ class Group(BaseGroup):
                     p4.payoff= Constants.endowment-c(50)
         
    
+#punishment
+    punishment=models.BooleanField(
+        choices=[(True, "Yes"), (False, "No")],
+        widget=widgets.RadioSelect(),
+        verbose_name="Do you want to pay 10 of your points to get 70 punishment points?",
+        doc="Boolean Field for decision C and D whether to buy punishment points."
+        ) 
+
 #punishment selection C or D:
 
     punishment_selection = models.CharField()
@@ -128,12 +135,24 @@ class Group(BaseGroup):
 
         p1.payoff = p1.payoff - punisher.punishment_A
         p2.payoff = p2.payoff - punisher.punishment_B
-
+        
         if self.punishment_selection == "C":
-            p4.payoff = p4.payoff - punisher.punishment_D
+            
+            if self.punishment == True:
+                p3.payoff = p3.payoff - Constants.punishment_costs
+                p4.payoff = p4.payoff - Constants.punishment_costs - punisher.punishment_D
+            else:
+                p3.payoff = p3.payoff
+                p4.payoff = p4.payoff - punisher.punishment_D
 
         if self.punishment_selection == "D":
-            p3.payoff = p3.payoff - punisher.punishment_C
+
+            if self.punishment == True:
+                p3.payoff = p3.payoff - Constants.punishment_costs - punisher.punishment_C
+                p4.payoff = p4.payoff - Constants.punishment_costs
+            else:
+                p3.payoff = p3.payoff - punisher.punishment_C
+                p4.payoff = p4.payoff              
 
 
 
@@ -157,13 +176,7 @@ class Player(BasePlayer):
         else:
             return "D"
 
-#punishment
-    punishment=models.BooleanField(
-        choices=[(True, "Yes"), (False, "No")],
-        widget=widgets.RadioSelect(),
-        verbose_name="Do you want to pay 10 of your points to get 70 punishment points?",
-        doc="Boolean Field for decision C and D whether to buy punishment points."
-        )
+#punishment  
 
     punishment_A=models.PositiveIntegerField(
         min= 0,

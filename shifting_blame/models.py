@@ -81,7 +81,7 @@ class Group(BaseGroup):
                     p3.payoff= Constants.endowment+Constants.project_1_points
                     p4.payoff= Constants.endowment+Constants.project_1_points
                 else:
-                    p1.payoff = 1000
+                    p1.payoff= c(1000)
                    # p1.payoff= Constants.endowment-c(50)
                    # p2.payoff= Constants.endowment-c(50)
                     #p3.payoff= Constants.endowment-c(50)
@@ -124,35 +124,35 @@ class Group(BaseGroup):
 
 
  #final payoffs after punishment decision
-    #def determine_final_payoffs(self):
+    def determine_final_payoffs(self):
         
-        #punisher = self.get_player_by_role(self.punishment_selection)
+        punisher = self.get_player_by_role(self.punishment_selection)
 
-        #p1 = self.get_player_by_role("A")
-        #p2 = self.get_player_by_role("B")
-       # p3 = self.get_player_by_role("C")
-        #p4 = self.get_player_by_role("D")
+        p1 = self.get_player_by_role("A")
+        p2 = self.get_player_by_role("B")
+        p3 = self.get_player_by_role("C")
+        p4 = self.get_player_by_role("D")
 
-        #p1.payoff = p1.payoff - punisher.punishment_A
-        #p2.payoff = p2.payoff - punisher.punishment_B
+        p1.payoff = p1.payoff - punisher.punishment_A
+        p2.payoff = p2.payoff - punisher.punishment_B
         
-        #if self.punishment_selection == "C":
+        if self.punishment_selection == "C":
             
-            #if self.punishment == True:
-                #p3.payoff = p3.payoff - Constants.punishment_costs
-                #p4.payoff = p4.payoff - Constants.punishment_costs - punisher.punishment_D
-            #else:
-                #p3.payoff = p3.payoff
-                #p4.payoff = p4.payoff - punisher.punishment_D
+            if self.punishment == True:
+                p3.payoff = p3.payoff - Constants.punishment_costs
+                p4.payoff = p4.payoff - Constants.punishment_costs - punisher.punishment_D
+            else:
+                p3.payoff = p3.payoff
+                p4.payoff = p4.payoff - punisher.punishment_D
 
-        #if self.punishment_selection == "D":
+        if self.punishment_selection == "D":
 
-            #if self.punishment == True:
-                #p3.payoff = p3.payoff - Constants.punishment_costs - punisher.punishment_C
-                #p4.payoff = p4.payoff - Constants.punishment_costs
-            #else:
-               # p3.payoff = p3.payoff - punisher.punishment_C
-                #p4.payoff = p4.payoff              
+            if self.punishment == True:
+                p3.payoff = p3.payoff - Constants.punishment_costs - punisher.punishment_C
+                p4.payoff = p4.payoff - Constants.punishment_costs
+            else:
+                p3.payoff = p3.payoff - punisher.punishment_C
+                p4.payoff = p4.payoff              
 
 
 

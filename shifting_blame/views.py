@@ -4,6 +4,12 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
+class WaitPage0(WaitPage):
+    group_by_arrival_time = True
+
+    title_text = "Please wait to be grouped."
+
+
 class Instructions(Page):
     pass
 
@@ -104,6 +110,7 @@ class Questions(Page):
 
 
 page_sequence = [
+    WaitPage0,
     Instructions,
     Role,
     DecisionA,

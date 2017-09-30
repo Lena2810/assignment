@@ -31,6 +31,9 @@ class DecisionA(Page):
     timeout_submission = {"investment_A": "I want to delegate the investment decision to player B."}
 
 class WaitPage1(WaitPage):
+    def is_displayed(self):
+        return self.player.id_in_group != 1
+
     title_text = "Wait for player A's decision."
 
 
@@ -45,11 +48,12 @@ class DecisionB(Page):
     timeout_submission = {"investment_B": "Project 1"}
 
 
-class WaitPage2(WaitPage):    
+class WaitPage2(WaitPage):
+
     title_text = "Wait for player B to make his decision."
 
     def is_displayed(self):
-        return self.group.investment_A == "I want to delegate the investment decision to player B."
+        return self.player.id_in_group != 2 and self.group.investment_A == "I want to delegate the investment decision to player B."
 
 
 class DeterminePayoffs(WaitPage):
@@ -86,7 +90,7 @@ class PunishmentDecision(Page):
             return ["punishment_A", "punishment_B", "punishment_C"]
 
 
-    def error_message(self, values):
+    def punishment_error_message(self, values):
         if self.player.id_in_group == 3:
             if int(values["punishment_A"]) + int(values["punishment_B"]) + int(values["punishment_D"]) > 70:
                 return 'The sum must be below or equal 70.'
@@ -108,15 +112,17 @@ class ResultsWaitPage(WaitPage):
 class Results(Page):
     pass
 
-    #timeout_seconds = 120
+    timeout_seconds = 120
 
 class Questions(Page):
     form_model=models.Player
     form_fields=["age","gender","field_of_studies","no_student","willingness_risk","nationality"]
 
-    def error_message(self):
-        if self.field_of_studies == "":
-
+    def error_message(self, values):
+        if values["field_of_studies"] == '' and values["no_student"] == False:
+            return "Please fill in either a field of study or check the box."
+        if values["field_of_studies"] != '' and values["no_student"] == True:
+            return "Please fill in a field of study or check the box."
 
 
     timeout_seconds = 180

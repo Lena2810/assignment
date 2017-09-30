@@ -20,7 +20,6 @@ class Constants(BaseConstants):
     project_1_points= c(50)
     punishment_max=c(70)
     punishment_costs = c(10)
-    payoff_min = c(0)
 
 class Subsession(BaseSubsession):
     pass
@@ -98,9 +97,6 @@ class Group(BaseGroup):
                         p.payoff= Constants.endowment-c(50)
 
 
-   
-
-
 #punishment selection C or D:
 
     punishment_selection = models.CharField()
@@ -155,11 +151,11 @@ class Player(BasePlayer):
         else:
             return "D"
 
-#punishment
+#punishment choice for C and D
     punishment=models.BooleanField(
         choices=[(True, "Yes"), (False, "No")],
         verbose_name="Do you want to pay 10 points to get 70 punishment points?",
-        doc="Boolean Field for decision C and D whether to buy punishment points."
+        doc="Boolean Field for decision of C and D whether to buy punishment points."
         ) 
 
 #punishment  
@@ -222,15 +218,11 @@ class Player(BasePlayer):
         blank=True,
         widget=widgets.RadioSelectHorizontal(),
         verbose_name="My willigness to take risk is high:",
-        doc="willigness to take risk input CharField"
+        doc="willigness to take risk input CharField- Likert Scale"
         )
     nationality=models.CharField(
         choices=["Germany", "Italy","France","Spain","Belgium","The Netherlands","UK", "China", "Japan","USA", "other"],
         blank=True,
         verbose_name="What is your country of birth?",
         doc= "input nationality dropdown"
-        )
-    other_nationality= models.CharField(
-        blank=True,
-        widget=widgets.HiddenInput()
         )

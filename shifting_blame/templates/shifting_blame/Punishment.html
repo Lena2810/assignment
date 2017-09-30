@@ -7,7 +7,12 @@
 
 {% block content %}
 
-{%formfield group.punishment%}
+<p><b>Do you want to pay 10 points to get 70 punishment points?</b></p>
+    <div>
+        <button name="punishment" value="True" class="btn btn-primary btn-large">Yes</button>
+        <button name="punishment" value="False" class="btn btn-primary btn-large">No</button>
+    </div>
 
-    {% next_button %}
+    
+
 {% endblock %}

@@ -2,7 +2,7 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Outcome of investment
+    Outcome of investment for player {{player.role}}
 {% endblock %}
 
 {% block content %}
@@ -23,7 +23,7 @@ The treatment of the project was {{group.risk}}.
 {% endif %}
 
 <p>&nbsp;</p>
-Your total payoff is {{player.payoff}}.
+Your current endowment is {{player.payoff}}.
 <p>&nbsp;</p>
 
 <!--

@@ -13,9 +13,13 @@ class WaitPage0(WaitPage):
 class Instructions(Page):
     def before_next_page(self):
         self.group.set_treatment()
+    
+    timeout_seconds = 180
 
 class Role(Page):
     pass
+    
+    timeout_seconds = 60
 
 class DecisionA(Page):
     def is_displayed(self):
@@ -23,8 +27,11 @@ class DecisionA(Page):
     form_model=models.Group
     form_fields=["investment_A"]
 
+    timeout_seconds = 120
+    timeout_submission = {"investment_A": "I want to delegate the investment decision to player B."}
+
 class WaitPage1(WaitPage):
-    title_text = "wait for Player A's decision."
+    title_text = "Wait for player A's decision."
 
 
 class DecisionB(Page):
@@ -34,22 +41,16 @@ class DecisionB(Page):
     form_model=models.Group
     form_fields=["investment_B"]
 
+    timeout_seconds = 120
+    timeout_submission = {"investment_B": "Project 1"}
+
 
 class WaitPage2(WaitPage):    
-    title_text = "wait for Player B to make his decision."
+    title_text = "Wait for player B to make his decision."
 
     def is_displayed(self):
         return self.group.investment_A == "I want to delegate the investment decision to player B."
 
-
-
-    #def before_next_page(self):
-       # self.group.determine_payoffs_investment()
-
-#class WaitPage2(WaitPage):
-    #def after_all_players_arrive(self):
-       # self.group.determine_payoffs_investment()
-   # title_text = "wait for the other players decision."
 
 class DeterminePayoffs(WaitPage):
     def after_all_players_arrive(self):
@@ -59,19 +60,21 @@ class DeterminePayoffs(WaitPage):
 
 class Information(Page):
     pass
-
+    timeout_seconds = 120
 
 
 class Punishment(Page):
     def is_displayed(self):
         return self.player.id_in_group == 3 or self.player.id_in_group == 4
-    form_model=models.Group
+    form_model=models.Player
     form_fields=["punishment"]
+
+    timeout_seconds = 120
 
 
 class PunishmentDecision(Page):
     def is_displayed(self):
-        return self.group.punishment == True
+        return self.player.punishment == True
 
     form_model=models.Player
 
@@ -92,20 +95,34 @@ class PunishmentDecision(Page):
             if int(values["punishment_A"]) + int(values["punishment_B"]) + int(values["punishment_C"]) > 70:
                 return 'The sum must be below or equal 70.'
 
-    
+    timeout_seconds = 180   
+
 class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
         self.group.determine_punishment_selection()
         self.group.determine_final_payoffs()
 
 
+
+
 class Results(Page):
     pass
+
+    #timeout_seconds = 120
 
 class Questions(Page):
     form_model=models.Player
     form_fields=["age","gender","field_of_studies","no_student","willingness_risk","nationality"]
 
+    def error_message(self):
+        if self.field_of_studies == "":
+
+
+
+    timeout_seconds = 180
+
+class Finish(Page):
+    pass
 
 page_sequence = [
     WaitPage0,
@@ -121,5 +138,6 @@ page_sequence = [
     PunishmentDecision,
     ResultsWaitPage,
     Results,
-    Questions
+    Questions,
+    Finish
 ]

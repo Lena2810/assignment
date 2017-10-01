@@ -90,7 +90,7 @@ class PunishmentDecision(Page):
             return ["punishment_A", "punishment_B", "punishment_C"]
 
 
-    def punishment_error_message(self, values):
+    def error_message(self, values):
         if self.player.id_in_group == 3:
             if int(values["punishment_A"]) + int(values["punishment_B"]) + int(values["punishment_D"]) > 70:
                 return 'The sum must be below or equal 70.'
